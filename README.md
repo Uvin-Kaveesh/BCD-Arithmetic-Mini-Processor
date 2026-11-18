@@ -45,14 +45,14 @@ Each operand is entered as a 4 bit value. An input checking circuit identifies v
 | `01` | Subtract |
 | `10` | Multiply |
 
-The `11` select state is not presented as a supported arithmetic operation in this project.
+`11` was reserved for division but was not implemented. Unlike the three supported operations, division can produce a fractional or repeating result (for example, `9 ÷ 2 = 4.5`) and must also handle division by zero. Supporting it would require a divider, a defined precision and rounding policy, and a display format beyond the current two digit integer BCD result. The project therefore completes the three operations that fit its specified datapath and output format, while leaving `11` as a defined extension point.
 
 ### Arithmetic blocks
 
-- **Addition:** A 4 bit binary sum is corrected by adding six when needed to produce decimal compatible BCD output.
-- **Subtraction:** The circuit uses two's complement arithmetic and a sign signal for negative results.
-- **Multiplication:** AND gate partial products are combined with adders. A conversion block maps the binary product to BCD for display.
-- **Selection:** Gate level 2:1 multiplexers form larger 4 bit and 8 bit selection blocks.
+- **Addition:** A 4 bit binary sum is corrected by adding six when needed. An uncorrected sum above nine is not a valid single BCD digit, so this step produces decimal compatible output for the display.
+- **Subtraction:** Two's complement turns `A − B` into an addition, allowing the design to use adder ICs. A sign signal distinguishes negative results when `A < B`.
+- **Multiplication:** AND gate partial products are combined with adders. The product is binary, so a conversion block maps it to BCD before it reaches the decimal display.
+- **Selection:** The operation code drives a result multiplexer so the output stage receives only the chosen arithmetic result. Larger 4 bit and 8 bit selection blocks are assembled from smaller multiplexers because the required wider block was not directly available in the component library used for the design.
 
 | BCD adder | Binary multiplier |
 |---|---|
@@ -62,9 +62,20 @@ The `11` select state is not presented as a supported arithmetic operation in th
 
 ## Design decisions and learning
 
-The hierarchical design made each arithmetic and control block easier to inspect in isolation. Building larger multiplexers from smaller ones made the operation selection logic explicit. The multiplier also required a representation change: its binary output had to be converted before a decimal display could show it correctly.
+| Design choice | Reason and effect |
+|---|---|
+| **Validate each BCD input** | A 4 bit switch can also represent `10–15`, which are not single BCD digits. Checking the inputs makes that invalid range visible instead of treating it as an ordinary operand. |
+| **Use BCD correction after binary addition** | Standard binary addition alone can produce a digit above nine. The correction step converts that result into valid BCD digits. |
+| **Reuse adders for subtraction** | Two's complement implements subtraction through addition. Sign detection handles the case where the first operand is smaller. |
+| **Convert the multiplier output** | Partial product addition naturally yields binary. Conversion is necessary before the two decimal digits can be displayed correctly. |
+| **Build a hierarchical MUX** | Combining smaller available components provides the required wider result selection and keeps the control path inspectable. |
+| **Use input and output registers** | The design requirements call for stored inputs and outputs, with a `CALCULATE` control signal. This separates entered values from the result being presented during simulation. |
 
-This project demonstrates practical work with BCD and binary number systems, two's complement, combinational logic, adder based arithmetic, multiplexers, modular schematics, and simulation based debugging.
+The module boundaries made the arithmetic blocks and control logic easier to build, inspect, and test individually. Together they demonstrate BCD and binary number systems, two's complement, combinational logic, adder based arithmetic, multiplexers, and simulation based debugging.
+
+### Result range and limits
+
+With valid single digit operands, the largest addition is `9 + 9 = 18` and the largest multiplication is `9 × 9 = 81`; both fit the two digit result display. The design report specifies an overflow flag for results above `99`, but that threshold is not reached by these supported operations with valid inputs. This is distinct from the input checks, which identify invalid BCD values above `9`.
 
 ## Verification material
 
@@ -97,3 +108,4 @@ The repository includes the [circuit test cases](docs/circuit-test-cases.pdf), t
 ## Scope
 
 This is a simulated educational hardware design for **single digit BCD operands**. It is not a programmable CPU or a physical hardware build. The repository preserves the native Proteus project and supporting documentation so the design can be reviewed beyond screenshots alone.
+
