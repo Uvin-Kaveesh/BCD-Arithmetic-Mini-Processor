@@ -2,7 +2,9 @@
 
 A modular digital circuit that accepts two single digit BCD inputs, selects an arithmetic operation, and presents the result on seven segment displays. I designed and simulated the circuit in Proteus using hierarchical schematics, logic gates, multiplexers, and arithmetic ICs.
 
-![Main Proteus circuit](docs/images/main-circuit.png)
+![BCD Arithmetic Mini Processor project overview](docs/images/hero.png)
+
+**Explore:** [Visual walkthrough](#visual-walkthrough) · [Architecture](#how-it-works) · [Recorded results](#recorded-simulation-results) · [Open in Proteus](#open-the-project)
 
 ## At a glance
 
@@ -13,6 +15,16 @@ A modular digital circuit that accepts two single digit BCD inputs, selects an a
 | **Output** | Two digit numeric display, operator display, and status signals |
 | **Tools** | Proteus schematic capture and simulation |
 | **Approach** | Hierarchical modules built from combinational logic and standard ICs |
+
+## Visual walkthrough
+
+![Four-step illustrated walkthrough of the circuit](docs/images/walkthrough.gif)
+
+[Watch the short MP4 walkthrough](docs/visual-walkthrough.mp4) · [View the original simulation screenshots](docs/circuit-test-cases.pdf)
+
+The animation is an **illustrated explanation assembled from project schematics and recorded examples**, not a live screen recording of the Proteus simulation. The native project and test-case PDF below provide the reviewable design and simulation evidence.
+
+The [visual source script](scripts/build_visuals.py) rebuilds the hero image and animation with Pillow. Set `FFMPEG_BIN` to an FFmpeg executable to rebuild the MP4 as well.
 
 ## Why this project
 
@@ -79,7 +91,19 @@ With valid single digit operands, the largest addition is `9 + 9 = 18` and the l
 
 ## Verification material
 
-The repository includes the [circuit test cases](docs/circuit-test-cases.pdf), the [design report](docs/design-report.pdf), [all project screenshots](docs/project-screenshots.pdf), and [individual module schematics](docs/module-schematics). These are the original project artifacts supplied with the Proteus design. The screenshots illustrate the circuit structure; the test case PDF is the place to inspect the recorded simulation examples.
+### Recorded simulation results
+
+The [design report](docs/design-report.pdf) lists five test cases for each operation. The following representative results are reported there, with simulation screenshots collected in the [circuit test cases](docs/circuit-test-cases.pdf). These are recorded project results, not automated tests run by GitHub.
+
+| Operation | Inputs | Expected decimal result | Reported result | Why it matters |
+|---|---:|---:|---:|---|
+| Addition | `4 + 5` | `09` | `09` | Single digit sum |
+| Addition | `8 + 9` | `17` | `17` | BCD carry and correction |
+| Subtraction | `9 − 3` | `06` | `06` | Two's complement path |
+| Multiplication | `7 × 8` | `56` | `56` | Binary product to BCD |
+| Multiplication | `9 × 9` | `81` | `81` | Largest valid product |
+
+The repository also preserves [all project screenshots](docs/project-screenshots.pdf) and [individual module schematics](docs/module-schematics) for closer inspection.
 
 ## Open the project
 
@@ -100,12 +124,21 @@ The repository includes the [circuit test cases](docs/circuit-test-cases.pdf), t
 │   ├── design-report.pdf
 │   ├── circuit-test-cases.pdf
 │   ├── project-screenshots.pdf
+│   ├── visual-walkthrough.mp4
 │   ├── module-schematics/
 │   └── images/
+├── scripts/
+│   └── build_visuals.py
 └── README.md
 ```
 
 ## Scope
 
 This is a simulated educational hardware design for **single digit BCD operands**. It is not a programmable CPU or a physical hardware build. The repository preserves the native Proteus project and supporting documentation so the design can be reviewed beyond screenshots alone.
+
+## Reuse
+
+Shared for portfolio review and learning. No open source license is granted. Contact the author before reusing or modifying the design, schematics, report, or visuals.
+
+Built by [Uvin Kaveesh](https://github.com/Uvin-Kaveesh).
 

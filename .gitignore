@@ -5,3 +5,8 @@
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Visual build cache
+__pycache__/
+*.pyc
+
