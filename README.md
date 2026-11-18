@@ -4,7 +4,7 @@ A modular digital circuit that accepts two single digit BCD inputs, selects an a
 
 ![BCD Arithmetic Mini Processor project overview](docs/images/hero.png)
 
-**Explore:** [Visual walkthrough](#visual-walkthrough) · [Architecture](#how-it-works) · [Recorded results](#recorded-simulation-results) · [Open in Proteus](#open-the-project)
+**Explore:** [Live Proteus demo](#live-proteus-demo) · [Visual walkthrough](#visual-walkthrough) · [Architecture](#how-it-works) · [Recorded results](#recorded-simulation-results) · [Open in Proteus](#open-the-project)
 
 ## At a glance
 
@@ -15,6 +15,12 @@ A modular digital circuit that accepts two single digit BCD inputs, selects an a
 | **Output** | Two digit numeric display, operator display, and status signals |
 | **Tools** | Proteus schematic capture and simulation |
 | **Approach** | Hierarchical modules built from combinational logic and standard ICs |
+
+## Live Proteus demo
+
+[Watch the narrated Proteus simulation (1 min 27 sec)](docs/proteus-live-demo.mp4)
+
+The edited screen recording shows input switches changing, the selected addition, subtraction, and multiplication operations, and the numeric output responding. The narration follows the visible examples and explains the arithmetic paths. A short closing card describes why the reserved division state is not implemented.
 
 ## Visual walkthrough
 
@@ -124,6 +130,7 @@ The repository also preserves [all project screenshots](docs/project-screenshots
 │   ├── design-report.pdf
 │   ├── circuit-test-cases.pdf
 │   ├── project-screenshots.pdf
+│   ├── proteus-live-demo.mp4
 │   ├── visual-walkthrough.mp4
 │   ├── module-schematics/
 │   └── images/
