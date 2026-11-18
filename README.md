@@ -18,7 +18,7 @@ A modular digital circuit that accepts two single digit BCD inputs, selects an a
 
 ## Live Proteus demo
 
-[Watch the narrated Proteus simulation (1 min 27 sec)](docs/proteus-live-demo.mp4)
+[Watch the narrated Proteus simulation (1 min 27 sec)](https://github.com/Uvin-Kaveesh/BCD-Arithmetic-Mini-Processor/issues/1) · [Download the MP4](docs/proteus-live-demo.mp4)
 
 The edited screen recording shows input switches changing, the selected addition, subtraction, and multiplication operations, and the numeric output responding. The narration follows the visible examples and explains the arithmetic paths. A short closing card describes why the reserved division state is not implemented.
 
